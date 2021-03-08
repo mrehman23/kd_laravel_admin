@@ -1,3 +1,5 @@
+@extends('kd::layouts.app')
+@section('content')
 <?php
 $opts = ['items' => $model->getItems()];
 $animateIcon = ' <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate" style="display:none;"></i>';
@@ -47,3 +49,4 @@ $animateIcon = ' <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate
         </div>
     </div>
 </div>
+@endsection

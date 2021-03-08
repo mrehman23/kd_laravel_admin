@@ -1,3 +1,5 @@
+@extends('kd::layouts.app')
+@section('content')
 <form method="POST" action="{{ route('kd.user.update') }}">
     @csrf
     <input type="hidden" name="id" value="{{$model->id}}" />
@@ -50,3 +52,4 @@
         </div>
     </div>
 </form>
+@endsection

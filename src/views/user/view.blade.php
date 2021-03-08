@@ -1,3 +1,5 @@
+@extends('kd::layouts.app')
+@section('content')
 <div class="user-view">
     <h1>{{ $model->name }}</h1>
     <p>
@@ -20,3 +22,4 @@
         </tbody>
     </table>
 </div>
+@endsection

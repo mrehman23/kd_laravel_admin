@@ -1,3 +1,5 @@
+@extends('kd::layouts.app')
+@section('content')
 <?php
 $lists=(!empty($data['list']) ? $data['list'] : []);
 ?>
@@ -36,3 +38,4 @@ $lists=(!empty($data['list']) ? $data['list'] : []);
                 @endforeach
         </table>
 </div>
+@endsection
