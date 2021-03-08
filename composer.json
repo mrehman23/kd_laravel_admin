@@ -1,0 +1,19 @@
+{
+    "name": "kd/kdladmin",
+    "description": "KD Laravle Admin",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mati",
+            "email": "k173093@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Kd\\Kdladmin\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}
