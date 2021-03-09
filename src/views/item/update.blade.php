@@ -1,4 +1,4 @@
-@extends('kd::layouts.app')
+@extends('layouts.app')
 @section('content')
 <div class="auth-item-update">
     <h1>{{ __('Update Permission : '.$model['name']) }}</h1>

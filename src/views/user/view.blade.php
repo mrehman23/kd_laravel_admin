@@ -1,4 +1,4 @@
-@extends('kd::layouts.app')
+@extends('layouts.app')
 @section('content')
 <div class="user-view">
     <h1>{{ $model->name }}</h1>

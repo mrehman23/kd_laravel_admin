@@ -1,4 +1,4 @@
-@extends('kd::layouts.app')
+@extends('layouts.app')
 @section('content')
 <?php
 $opts = ['items' => $model->getItems()];

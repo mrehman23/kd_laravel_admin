@@ -5,9 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <!-- Styles -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('vendor/kdladmin/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/kdladmin/font-awesome.min.css') }}">
 </head>
 <body>
     <div id="app">
@@ -21,14 +20,7 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-                        <li><a href="{{ url('/admin') }}">Dashboard <span class="sr-only">(current)</span></a></li>
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
                         @guest
                             <li><a class="nav-link" href="{{ url('/login') }}">Login</a></li>
                             <li><a class="nav-link" href="{{ url('/register') }}">Register</a></li>
@@ -37,14 +29,12 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
-
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ url('/logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         Logout
                                     </a>
-
                                     <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
@@ -55,7 +45,6 @@
                 </div>
             </div>
         </nav>
-
         <main class="py-4">
             @if (Session::has('flash_message'))
                 <div class="container">
@@ -65,34 +54,15 @@
                     </div>
                 </div>
             @endif
-
             @yield('content')
         </main>
-
         <hr/>
-
         <div class="container">
             &copy; {{ date('Y') }}. Created by <a href="http://www.kreativedezine.com">Kreative Dezine</a>
             <br/>
         </div>
-
     </div>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.8.1/tinymce.min.js"></script>
-    <script type="text/javascript">
-        tinymce.init({
-            selector: '.crud-richtext'
-        });
-    </script>
-    <script type="text/javascript">
-        $(function () {
-            // Navigation active
-            $('ul.navbar-nav a[href="{{ "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" }}"]').closest('li').addClass('active');
-        });
-    </script>
-
+    <script src="{{ asset('vendor/kdladmin/jquery-3.6.0.min.js') }}"></script>
     @yield('scripts')
 </body>
 </html>

@@ -1,4 +1,4 @@
-@extends('kd::layouts.app')
+@extends('layouts.app')
 @section('content')
 <div class="auth-item-create">
     <h1>{{ __('Create Permission') }}</h1>
