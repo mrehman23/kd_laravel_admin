@@ -15,15 +15,9 @@ class KdMatiServiceProvider extends ServiceProvider
     {
         $this->loadRoutesFrom(__DIR__.'/routes.php');
         $this->loadViewsFrom(__DIR__.'/views', 'kd');
-        $this->publishes([__DIR__.'/publish' => public_path('vendor/kdladmin')], 'public');
-        $this->publishes([__DIR__.'/views/layouts' => 'resources/views/layouts'], 'public');
-        // $this->app['router']->middleware('kdverifyroutes', 'Kd\Kdladmin\Middleware\KdVerifyRoutesMiddleware');
-        $this->app['router']->pushMiddlewareToGroup('web', Kd\Kdladmin\Middleware\KdVerifyRoutesMiddleware::class);
-        // $this->loadMiddlewareGroupsFrom('web', ['']);
-        // $this->app->middleware([
-        //        // \Vendor\Package\Middleware\TestMiddleware::class
-        //     \Kd\Kdladmin\Middleware\KdVerifyRoutesMiddleware
-        // ]);
+        $this->publishes([__DIR__.'/publish' => public_path('vendor/kdladmin')], 'kdpublic');
+        $this->publishes([__DIR__.'/views/layouts' => 'resources/views/layouts'], 'kdpublic');
+        $this->app['router']->pushMiddlewareToGroup('web', Middleware\KdVerifyRoutesMiddleware::class);
     }
 
     /**
@@ -33,6 +27,6 @@ class KdMatiServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // $this->app->make('Kd\Kdladmin\Controllers\UserController');        
+        //
     }
 }

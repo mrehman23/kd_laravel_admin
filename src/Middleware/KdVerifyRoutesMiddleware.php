@@ -3,9 +3,12 @@
 namespace Kd\Kdladmin\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 use Kd\Kdladmin\Models\Assignment;
+use Kd\Kdladmin\Models\AuthItem;
+use Kd\Kdladmin\Models\AuthItemChild;
 // use Illuminate\Http\Request;
-
+use Config;
 /**
  * KdVerifyRoutesMiddleware implements Permissions to routes.
  *
@@ -14,44 +17,8 @@ use Kd\Kdladmin\Models\Assignment;
  */
 class KdVerifyRoutesMiddleware
 {
-    protected $except = [
-        //
-    ];
-
-    public function handle($request, Closure $next)
-    {
-        // $is_allow=true;
-
-        $get_per=Assignment::get();
-        dd($get_per);
-        $chk=Assignment::where(['id'=>$request->input('user_id'),'api_token'=>$request->input('auth_key')])->first();
-
-        $is_allow=(!empty($chk) ? true : false);
-
-        // $roles[];
-        // foreach ($roles as $role) {
-        //   if ($this->roles->contains('slug', $role)) {
-        //     return true;
-        //     $is_allow=false;
-        //   }
-        // }
-        if(!$is_allow) {
-            return response()->json('Not Authorized to access', 401);
-        }
-
-        // return false;
-
-        // $chk=Assignment::where(['id'=>$request->input('user_id'),'api_token'=>$request->input('auth_key')])->first();
-        // $is_allow=(!empty($chk) ? true : false);
-        // if(!$is_allow) {
-        //     $response['status']=false;
-        //     $response['msg']='Invalid Access.';
-        //     $response['data']=[];
-        //     return response()->json($response, 401);
-        // }
-
-        return $next($request);
-    }
+    private $allowed_routes = [];
+    private $auth_item = [];
 
     /**
      * Handle an incoming request.
@@ -60,35 +27,46 @@ class KdVerifyRoutesMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle11($request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        $is_allow=false;
-        $registered_users=[
-            [
-                'url'=>'www.host-20.com',
-                'ip'=>'::1',
-                'company'=>'ZIA PHARMACY',
-                'org_id'=>'1',
-                'contact_person'=>'MATI',
-                'access_key'=>'T2YBBU5T5p2YLkZE47q1i6B5qsQsrLRXSJoQ6KlkwxgfkzJM4G14XwaMCu6YCnN5DcBQPEYziyb2npdl86ATIy824Qet6qsBSFOvgorz5TkbGjKp3TG5xb7Wjraq0p0TnHFNkTLRH0KdVZyzEPpC7bz10FqIDOiSyolUB3dkoI31LSCrBj6cTLlrV8aasHXCFUHXVsPDtocATmOs05IxXPT6gKG258j6JlKZLJKedhQYSQOo3gbz76FflBHekrqq',
-            ],
-            [
-                'url'=>'www.hope-20.com',
-                'ip'=>'192.13.12.22',
-                'company'=>'HOPE 20',
-                'org_id'=>'1',
-                'contact_person'=>'YAWER',
-                'access_key'=>'GAfTZXp2uqWybGubB4H6ppHl1YofcfamUejwZjran054XHfO1PaxfKaHBHy0ina2cq44NTG84G8C1WDJD4fBHqZjvQGEgUs8ByAUfnLcVrujotUs1MuLqAtJasS07TTBqFgAeoOKmwkaXhBcGWCZR4yHU84LuCXHgUz6MJTn88em3IAeUCDFe2BZ7YS4wcAhxWXfIqd8NPsyljFyVCKrsjPJ0pShSMhqgF5aFxA5acCQ7rQzfPvepWjvjZmyQqgi',
-            ],
-        ];
-        foreach ($registered_users as $key => $value) {
-            if ($request->input('access_key')==$value["access_key"] && $request->ip()==$value['ip']) {
-                $is_allow=true;
+        $id=Auth::id();
+        $id=1;
+        $p=[];
+        $r=[];
+        $croute=$request->route()->getName();
+        $this->auth_item=array_column(AuthItem::get()->toArray(), 'name');
+        foreach (Assignment::where(['user_id'=>$id])->get() as $key => $perm_list) {
+            if(in_array($perm_list['item_name'], $this->auth_item)) {
+                $auth_type='permission';
+                $p[$perm_list['item_name']]='permission';
+            } else {
+                $auth_type='route';
+                $r[$perm_list['item_name']]='route';
             }
+            $auth_item_type[$perm_list['item_name']] = $auth_type;
         }
+        $this->getRouteList($p);
+        $this->allowed_routes=array_merge($this->allowed_routes,$r);
+        $check_except=(!empty(Config::get('app.kdladmin_except')) ? Config::get('app.kdladmin_except') : []);
+        $is_allow=(!empty($croute) ? (!in_array($croute, $check_except) ? (!array_key_exists($croute, $this->allowed_routes) ? false : true) : true) : true);
         if(!$is_allow) {
-            return response()->json('Not Registered to access', 401);
+            return response()->json('Not Authorized to access', 401);
         }
         return $next($request);
+    }
+
+    private function getRouteList($p) {
+        foreach ($p as $key => $value) {
+            $perm_lists=AuthItemChild::where(['parent'=>$key])->get()->toArray();
+            $gen_array=[];
+            foreach ($perm_lists as $key => $perm_list) {
+                if(in_array($perm_list['child'], $this->auth_item)) {
+                    $gen_array[$perm_list['child']]='permission';
+                } else {
+                    $this->allowed_routes[$perm_list['child']]='routes';
+                }
+            }
+            $this->getRouteList($gen_array);
+        }
     }
 }

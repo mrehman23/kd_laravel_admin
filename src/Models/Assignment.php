@@ -114,25 +114,16 @@ class Assignment extends Model
                 $available[$route->getName()] = 'route';
             }
         }
-        // $generated=[];
-        // foreach (AuthItem::get() as $key => $route) {
-        //     $generated[$route->name] = (array_key_exists($route->name, $available) ? 'route' : 'permission');
-        // }
         $auth_item=[];
         foreach (AuthItem::get() as $key => $route) {
             $auth_item[$route->name] = 'permission';
             $available[$route->name] = 'permission';
         }
-
-        // dd($available);
-        // $perm_lists=AuthItem::get();
         $perm_lists=Assignment::where(['user_id'=>Request()->id])->get();
         foreach ($perm_lists as $key => $perm_list) {
             $assigned[$perm_list['item_name']] = (array_key_exists($perm_list['item_name'], $auth_item) ? 'permission' : 'route');
             unset($available[$perm_list['item_name']]);
         }
-        // dd($available);
-        // dd(Route::getRoutes());
         unset($available[$this->name]);
         ksort($available);
         ksort($assigned);
