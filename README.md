@@ -1,12 +1,12 @@
 # Laravel KdlAdmin RBAC-Permission
 
-Allow users to setup laravel RBAC-Permission Module in 
+Allow users to setup laravel RBAC-Permission Module
 
-# create fresh project
+# Create new project
 
 composer create-project laravel/laravel kdladmin_auth
 
-# add repo in composer.json file:
+# Add repo in composer.json file:
 
 ```php
 "require": {
@@ -25,23 +25,46 @@ composer create-project laravel/laravel kdladmin_auth
 composer.update
 ```
 
-# add below provider in config.app
+# Add below provider in config.app
 
 Kd\Kdladmin\KdMatiServiceProvider::class,
 
-# add kdladmin_except for exception URL in config.app file;
+# Add kdladmin_except for exception URL in config.app file;
 
 ```php
 'kdladmin' => [
-    '_type' => 'uri', //uri, name
+    '_type' => 'name', //uri, name
     '_except' => [
+        'kd.user.index',
+        'kd.user.view',
+        'kd.user.delete',
+        'kd.user.create',
+        'kd.user.store',
+        'kd.user.edit',
+        'kd.user.update',
+        'kd.user.activate',
+        'kd.permission.index',
+        'kd.permission.view',
+        'kd.permission.create',
+        'kd.permission.store',
+        'kd.permission.edit',
+        'kd.permission.update',
+        'kd.permission.delete',
+        'kd.permission.assign',
+        'kd.permission.remove',
+        'kd.assignment.index',
+        'kd.assignment.view',
+        'kd.assignment.assign',
+        'kd.assignment.revoke',
         'home',
         'login',
     ],
 ]
+
+
 ```
 
-# to publish package file
+# To publish package file
 
 php artisan vendor:publish --tag=kdpublic --force
 
