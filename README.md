@@ -1,10 +1,14 @@
-#Laravel KdlAdmin RBAC-Permission
+# Laravel KdlAdmin RBAC-Permission
+
 Allow users to setup laravel RBAC-Permission Module in 
 
-#create fresh project
+# create fresh project
+
 composer create-project laravel/laravel kdladmin_auth
 
-#add repo in composer.json file:
+# add repo in composer.json file:
+
+```php
 "require": {
 	...
 	"kd/kdladmin": "^1.0.0"
@@ -19,11 +23,15 @@ composer create-project laravel/laravel kdladmin_auth
 	...
 ],
 composer.update
+```
 
-#add below provider in config.app
+# add below provider in config.app
+
 Kd\Kdladmin\KdMatiServiceProvider::class,
 
-#add kdladmin_except for exception URL in config.app file;
+# add kdladmin_except for exception URL in config.app file;
+
+```php
 'kdladmin' => [
     '_type' => 'uri', //uri, name
     '_except' => [
@@ -31,7 +39,9 @@ Kd\Kdladmin\KdMatiServiceProvider::class,
         'login',
     ],
 ]
+```
 
-#to publish package file
+# to publish package file
+
 php artisan vendor:publish --tag=kdpublic --force
 
