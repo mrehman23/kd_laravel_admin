@@ -30,10 +30,14 @@ class KdVerifyRoutesMiddleware
     public function handle($request, Closure $next)
     {
         $id=Auth::id();
-        $id=1;
         $p=[];
         $r=[];
-        $croute=$request->route()->getName();
+        $conf_params=Config::get('app.kdladmin');
+        if(!empty($conf_params['_type']) && $conf_params['_type']=='uri') {
+            $croute=$request->route()->uri();
+        } else {
+            $croute=$request->route()->getName();
+        }
         $this->auth_item=array_column(AuthItem::get()->toArray(), 'name');
         foreach (Assignment::where(['user_id'=>$id])->get() as $key => $perm_list) {
             if(in_array($perm_list['item_name'], $this->auth_item)) {
@@ -47,7 +51,7 @@ class KdVerifyRoutesMiddleware
         }
         $this->getRouteList($p);
         $this->allowed_routes=array_merge($this->allowed_routes,$r);
-        $check_except=(!empty(Config::get('app.kdladmin_except')) ? Config::get('app.kdladmin_except') : []);
+        $check_except=(!empty($conf_params['_except']) ? $conf_params['_except'] : []);
         $is_allow=(!empty($croute) ? (!in_array($croute, $check_except) ? (!array_key_exists($croute, $this->allowed_routes) ? false : true) : true) : true);
         if(!$is_allow) {
             return response()->json('Not Authorized to access', 401);

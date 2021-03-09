@@ -2,6 +2,7 @@
 
 namespace kd\kdladmin\Models;
 
+use Config;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Route;
 use Kd\Kdladmin\Components\Configs;
@@ -62,9 +63,16 @@ class Assignment extends Model
     {
         $assigned = [];
         $available = [];
+        $conf_params=Config::get('app.kdladmin');
         foreach (Route::getRoutes() as $key => $route) {
-            if($route->getName()) {
-                $available[$route->getName()] = 'route';
+            if(!empty($conf_params['_type']) && $conf_params['_type']=='uri') {
+                if($route->uri()) {
+                    $available[$route->uri()] = 'route';
+                }
+            } else {
+                if($route->getName()) {
+                    $available[$route->getName()] = 'route';
+                }
             }
         }
         $auth_item=[];

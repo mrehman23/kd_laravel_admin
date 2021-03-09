@@ -24,9 +24,12 @@ composer.update
 Kd\Kdladmin\KdMatiServiceProvider::class,
 
 #add kdladmin_except for exception URL in config.app file;
-'kdladmin_except' => [
-    'home',
-    'login',
+'kdladmin' => [
+    '_type' => 'uri', //uri, name
+    '_except' => [
+        'home',
+        'login',
+    ],
 ]
 
 #to publish package file
