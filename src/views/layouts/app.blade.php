@@ -7,6 +7,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="stylesheet" href="{{ asset('vendor/kdladmin/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/kdladmin/font-awesome.min.css') }}">
+    <script src="{{ asset('vendor/kdladmin/jquery-3.6.0.min.js') }}"></script>
 </head>
 <body>
     <div id="app">
@@ -62,7 +63,6 @@
             <br/>
         </div>
     </div>
-    <script src="{{ asset('vendor/kdladmin/jquery-3.6.0.min.js') }}"></script>
     @yield('scripts')
 </body>
 </html>

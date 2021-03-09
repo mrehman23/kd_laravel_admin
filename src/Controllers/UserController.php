@@ -10,18 +10,6 @@ use Kd\Kdladmin\Models\User;
 
 class UserController extends Controller
 {
-    /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'status' => ['required', 'number', 'max:1'],
-        ]);
-    }
 
     public function index(Request $request)
     {
@@ -92,16 +80,5 @@ class UserController extends Controller
     protected function findModel($id)
     {
         return User::findorfail($id);
-    }
-
-    public function welcome()
-    {
-        return view('kd::welcome');
-    }
-
-    public function greeting($id)
-    {
-        return view('Kd::welcome');
-        return 'Hi ' . $id . '! How are you doing today?';
     }
 }

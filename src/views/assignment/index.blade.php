@@ -2,7 +2,6 @@
 @section('content')
 <?php
 $lists=(!empty($data['list']) ? $data['list'] : []);
-// dd($lists);
 ?>
 <div class="assignment-index">
     <h1><?= 'Assignments' ?></h1>

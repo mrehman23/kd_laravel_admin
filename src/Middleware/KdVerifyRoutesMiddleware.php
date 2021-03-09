@@ -3,12 +3,12 @@
 namespace Kd\Kdladmin\Middleware;
 
 use Closure;
+use Config;
 use Illuminate\Support\Facades\Auth;
 use Kd\Kdladmin\Models\Assignment;
 use Kd\Kdladmin\Models\AuthItem;
 use Kd\Kdladmin\Models\AuthItemChild;
-// use Illuminate\Http\Request;
-use Config;
+
 /**
  * KdVerifyRoutesMiddleware implements Permissions to routes.
  *

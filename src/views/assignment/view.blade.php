@@ -4,8 +4,6 @@
 $opts = ['items' => $model->getItems()];
 $animateIcon = ' <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate" style="display:none;"></i>';
 ?>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @include('kd::item._script',[$opts])
 <div class="assignment-index">
     <h1>{{$model->user->name}}</h1>

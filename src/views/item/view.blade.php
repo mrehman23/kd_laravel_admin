@@ -4,8 +4,6 @@
 $opts = ['items' => $model->getItems()];
 $animateIcon = ' <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate" style="display:none;"></i>';
 ?>
-<link href="/prac/yii2-app/backend/web/assets/341045bb/css/bootstrap.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @include('kd::item._script',[$opts])
 <div class="auth-item-view">
     <h1>{{$data['name']}}</h1>
