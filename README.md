@@ -18,7 +18,7 @@ composer create-project laravel/laravel kdladmin_auth
 	...
     {
         "type": "vcs",
-        "url": "https://github.com/mrehman23/kdladmin"
+        "url": "https://github.com/mrehman23/kd_laravel_admin"
     }
 	...
 ],
