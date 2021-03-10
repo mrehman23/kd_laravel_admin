@@ -2,11 +2,11 @@
 
 Allow users to setup laravel RBAC-Permission Module
 
-# Create new project
+## Create new project
 
 composer create-project laravel/laravel kdladmin_auth
 
-# Add repo in composer.json file:
+## Add repo in composer.json file:
 
 ```php
 "require": {
@@ -22,14 +22,16 @@ composer create-project laravel/laravel kdladmin_auth
     }
 	...
 ],
-composer.update
+
+composer update
 ```
 
-# Add below provider in config.app
+## Add below provider in config.app
 
+```php
 Kd\Kdladmin\KdMatiServiceProvider::class,
-
-# Add kdladmin_except for exception URL in config.app file;
+```
+## Add kdladmin_except for exception URL in config.app file;
 
 ```php
 'kdladmin' => [
@@ -60,11 +62,9 @@ Kd\Kdladmin\KdMatiServiceProvider::class,
         'login',
     ],
 ]
-
-
 ```
 
-# To publish package file
+## To publish package file
 
 php artisan vendor:publish --tag=kdpublic --force
 

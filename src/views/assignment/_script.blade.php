@@ -7,12 +7,10 @@ $(document).ready(function(e) {
         search('available');
         search('assigned');
     }
-
     $('.btn-assign').click(function () {
         var $this = $(this);
         var target = $this.data('target');
         var items = $('select.list[data-target="' + target + '"]').val();
-
         if (items && items.length) {
             $this.children('i.glyphicon-refresh-animate').show();
             $.post($this.attr('href'), {items: items}, function (r) {
@@ -23,11 +21,9 @@ $(document).ready(function(e) {
         }
         return false;
     });
-
     $('.search[data-target]').keyup(function () {
         search($(this).data('target'));
     });
-
     function search(target) {
         var $list = $('select.list[data-target="' + target + '"]');
         $list.html('');
@@ -49,8 +45,7 @@ $(document).ready(function(e) {
             }
         });
     }
-
-    // initial
     search('available');
     search('assigned');
+});
 </script>

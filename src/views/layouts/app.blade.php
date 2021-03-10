@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf_token" content="{{ csrf_token() }}" />
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="stylesheet" href="{{ asset('vendor/kdladmin/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/kdladmin/font-awesome.min.css') }}">
@@ -64,5 +65,13 @@
         </div>
     </div>
     @yield('scripts')
+
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+        }
+    });
+</script>
 </body>
 </html>
