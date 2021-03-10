@@ -11,7 +11,7 @@ composer create-project laravel/laravel kdladmin_auth
 ```php
 "require": {
 	...
-	"kd/kdladmin": "^1.0.0"
+	"kd/kdladmin": "^1.0.7"
 	....
 },
 "repositories": [
