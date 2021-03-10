@@ -15,10 +15,9 @@ use Illuminate\Http\Request;
  */
 class AuthItem extends Model
 {
-    private $prefix;
-    public $timestamps = false;
     protected $primaryKey = 'name';
     protected $keyType = 'string';
+    public $incrementing = false;
 
     public function __construct($config = []) {
         parent::__construct($config);
@@ -26,7 +25,7 @@ class AuthItem extends Model
     }
 
     protected $fillable = [
-        'name','type','description','ruleName','data','updated_at','created_at'
+        'name','type','description','updated_at','created_at'
     ];
 
     public function getDateFormat() {

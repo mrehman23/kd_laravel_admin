@@ -11,12 +11,17 @@ use Kd\Kdladmin\Components\Configs;
  */
 class User extends Model
 {
-    private $prefix;
     protected $primaryKey = 'id';
+    public $sequence = 'kd_users_id_seq';
+
     protected $fillable = [
         'id', 'name', 'email', 'email_verified_at', 'password', 'remember_token', 'created_at', 'updated_at','status'
     ];
 
+    public function getDateFormat() {
+        return 'U';
+    }
+    
     protected $hidden = [
         'password', 'remember_token',
     ];

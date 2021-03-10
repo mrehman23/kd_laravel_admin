@@ -37,8 +37,6 @@ class PermissionController extends Controller
             'name' => $request->name,
             'type' => (!empty($request->type) ? $request->type : 2),
             'description' => $request->description,
-            'rule_name' => $request->rule_name,
-            'data' => $request->data,
         ]);
         if($user) {
             return redirect(route('kd.permission.index'));
