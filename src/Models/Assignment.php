@@ -25,7 +25,7 @@ class Assignment extends Model
         $this->id = $id;
         $this->user = $user;
         parent::__construct($config);
-        $this->setTable(Configs::$auth_assignmentTable);
+        $this->setTable(Configs::auth_assignmentTable());
     }
     protected $fillable = [
         'item_name', 'user_id', 'created_at'

@@ -21,7 +21,7 @@ class AuthItem extends Model
 
     public function __construct($config = []) {
         parent::__construct($config);
-        $this->setTable(Configs::$auth_itemTable);
+        $this->setTable(Configs::auth_itemTable());
     }
 
     protected $fillable = [

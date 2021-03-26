@@ -14,7 +14,7 @@ class AuthItemChild extends Model
     public $timestamps = false;
     public function __construct($config = []) {
         parent::__construct($config);
-        $this->setTable(Configs::$auth_item_childTable);
+        $this->setTable(Configs::auth_item_childTable());
     }
     protected $fillable = [
         'parent', 'child'

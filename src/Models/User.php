@@ -32,7 +32,7 @@ class User extends Model
 
     public function __construct($config = []) {
         parent::__construct($config);
-        $this->setTable(Configs::$userTable);
+        $this->setTable(Configs::userTable());
     }
 
     public function search($params)
