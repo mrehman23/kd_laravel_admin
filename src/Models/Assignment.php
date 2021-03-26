@@ -18,6 +18,8 @@ use Illuminate\Http\Request;
 class Assignment extends Model
 {
     public $id, $user;
+    private $allowed_routes = [];
+    private $auth_item = [];
 
     public function __construct($id = 0, $user = null, $config = []) {
         $this->id = $id;
@@ -92,5 +94,38 @@ class Assignment extends Model
             'available' => $available,
             'assigned' => $assigned,
         ];
+    }
+
+    public function getUserRoutes($id) {
+        $p=[];
+        $r=[];
+        $this->auth_item=array_column(AuthItem::get()->toArray(), 'name');
+        foreach (Assignment::where(['user_id'=>$id])->get() as $key => $perm_list) {
+            if(in_array($perm_list['item_name'], $this->auth_item)) {
+                $auth_type='permission';
+                $p[$perm_list['item_name']]='permission';
+            } else {
+                $auth_type='route';
+                $r[$perm_list['item_name']]='route';
+            }
+        }
+        $this->getRouteList($p);
+        $this->allowed_routes=array_merge($this->allowed_routes,$r);
+        return $this->allowed_routes;
+    }
+
+    private function getRouteList($p) {
+        foreach ($p as $key => $value) {
+            $perm_lists=AuthItemChild::where(['parent'=>$key])->get()->toArray();
+            $gen_array=[];
+            foreach ($perm_lists as $key => $perm_list) {
+                if(in_array($perm_list['child'], $this->auth_item)) {
+                    $gen_array[$perm_list['child']]='permission';
+                } else {
+                    $this->allowed_routes[$perm_list['child']]='routes';
+                }
+            }
+            $this->getRouteList($gen_array);
+        }
     }
 }
