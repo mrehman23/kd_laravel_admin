@@ -31,6 +31,18 @@ composer update
 ```php
 Kd\Kdladmin\KdMatiServiceProvider::class,
 ```
+## Add below code in AuthServiceProvider.app in boot()
+
+```php
+use Kd\Kdladmin\Models\Assignment;
+$assignment=new Assignment();
+foreach ($assignment->getUserPermissions() as $key => $permission) {
+    Gate::define($key, function ($user) use ($key) {
+        return true;
+    });
+}
+```
+
 ## Add kdladmin_except for exception URL in config.app file;
 
 ```php

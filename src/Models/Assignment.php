@@ -10,6 +10,7 @@ use Kd\Kdladmin\Models\AuthItem;
 use Kd\Kdladmin\Models\AuthItemChild;
 use Kd\Kdladmin\Models\User;
 use Illuminate\Http\Request;
+use Auth;
 
 /**
  * @author KD Services <support@kreativedezine.com>
@@ -19,6 +20,7 @@ class Assignment extends Model
 {
     public $id, $user;
     private $allowed_routes = [];
+    private $allowed_permissions = [];
     private $auth_item = [];
 
     public function __construct($id = 0, $user = null, $config = []) {
@@ -126,6 +128,34 @@ class Assignment extends Model
                 }
             }
             $this->getRouteList($gen_array);
+        }
+    }
+
+    public function getUserPermissions() {
+        $id=Auth::id();
+        $p=[];
+        $this->auth_item=array_column(AuthItem::get()->toArray(), 'name');
+        foreach (Assignment::where(['user_id'=>$id])->get() as $key => $perm_list) {
+            if(in_array($perm_list['item_name'], $this->auth_item)) {
+                $p[$perm_list['item_name']]='permission';
+            }
+        }
+        $this->getPermissionList($p);
+        $this->allowed_permissions=array_merge($this->allowed_permissions,$p);
+        return $this->allowed_permissions;
+    }
+
+    private function getPermissionList($p) {
+        foreach ($p as $key => $value) {
+            $perm_lists=AuthItemChild::where(['parent'=>$key])->get()->toArray();
+            $gen_array=[];
+            foreach ($perm_lists as $key => $perm_list) {
+                if(in_array($perm_list['child'], $this->auth_item)) {
+                    $gen_array[$perm_list['child']]='permission';
+                    $this->allowed_permissions[$perm_list['child']]='permission';
+                }
+            }
+            $this->getPermissionList($gen_array);
         }
     }
 }
