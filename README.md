@@ -35,12 +35,14 @@ Kd\Kdladmin\KdMatiServiceProvider::class,
 
 ```php
 use Kd\Kdladmin\Models\Assignment;
-$assignment=new Assignment();
-foreach ($assignment->getUserPermissions() as $key => $permission) {
-    Gate::define($key, function ($user) use ($key) {
-        return true;
-    });
-}
+view()->composer('*', function($view) {
+    $assignment=new Assignment();
+    foreach ($assignment->getUserPermissions() as $key => $permission) {
+        Gate::define($key, function ($user) use ($key) {
+            return true;
+        });
+    }
+});
 ```
 
 ## Add kdladmin_except for exception URL in config.app file;

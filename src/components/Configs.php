@@ -1,6 +1,6 @@
 <?php
 
-namespace kd\kdladmin\components;
+namespace kd\kdladmin\Components;
 use Config;
 
 class Configs
